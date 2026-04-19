@@ -29,7 +29,7 @@ int kv_put(kv_t *db, const char *key, const char *value)
 	if (!db || !key || !value) return ERR_NULL_PASSED;
 
 	size_t idx = hash(key, db->capacity);
-	for (size_t i = 0; i < db->capacity - 1; i++) {
+	for (int i = 0; i < db->capacity - 1; i++) {
 		size_t real_idx = (idx + i) % db->capacity;
 		kv_entry_t *entry = &db->entries[real_idx];
 
