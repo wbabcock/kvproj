@@ -26,7 +26,7 @@ size_t hash(const char *value, int capacity)
 //	returns EXIT_FAILURE, on not found returns ERR_NOT_FOUND
 int kv_put(kv_t *db, const char *key, const char *value)
 {
-	if (!db || !key || !value) return EXIT_FAILURE;
+	if (!db || !key || !value) return ERR_NULL_PASSED;
 
 	size_t idx = hash(key, db->capacity);
 	for (size_t i = 0; i < db->capacity - 1; i++) {
@@ -36,7 +36,7 @@ int kv_put(kv_t *db, const char *key, const char *value)
 		// the key is already set, updating
 		if (entry->key && entry->key != TOMBSTONE && !strcmp(entry->key, key)) {
 			char *newval = strdup(value);
-			if (!newval) return EXIT_FAILURE;
+			if (!newval) return ERR_NULL_PASSED;
 			entry->value = newval;
 			return real_idx;
 		}
@@ -48,7 +48,7 @@ int kv_put(kv_t *db, const char *key, const char *value)
 			if (!newkey | !newval) {
 				free(newkey);
 				free(newval);
-				return EXIT_FAILURE;
+				return ERR_NULL_PASSED;
 			}
 			entry->key = newkey;
 			entry->value = newval;

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #define TOMBSTONE ((char *)0x1)
+#define ERR_NULL_PASSED -1
 #define ERR_NOT_FOUND -2
 
 typedef struct
