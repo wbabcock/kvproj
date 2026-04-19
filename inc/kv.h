@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 
+#define TOMBSTONE ((char *)0x1)
 #define ERR_NOT_FOUND -2
 
 typedef struct

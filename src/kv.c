@@ -1,8 +1,6 @@
 #include <kv.h>
 #include <string.h>
 
-#define TOMBSTONE 0x1
-
 size_t hash(const char *value, int capacity)
 {
 	size_t hash = 0x13371337deadbeef;
@@ -36,7 +34,7 @@ int kv_put(kv_t *db, const char *key, const char *value)
 		kv_entry_t *entry = &db->entries[real_idx];
 
 		// the key is already set, updating
-		if (entry->key && entry->key != (void *)TOMBSTONE && !strcmp(entry->key, key)) {
+		if (entry->key && entry->key != TOMBSTONE && !strcmp(entry->key, key)) {
 			char *newval = strdup(value);
 			if (!newval) return EXIT_FAILURE;
 			entry->value = newval;
@@ -44,7 +42,7 @@ int kv_put(kv_t *db, const char *key, const char *value)
 		}
 
 		// the slot is EMPTY or was removed and now TOMBSTONE
-		if (!entry->key || entry->key == (void *)TOMBSTONE) {
+		if (!entry->key || entry->key == TOMBSTONE) {
 			char *newkey = strdup(key);
 			char *newval = strdup(value);
 			if (!newkey | !newval) {
